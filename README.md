@@ -6,3 +6,6 @@ Jak lze poznat z názvu tématu, jedná se tvorbu Quarto dokumentů, přesněji 
 
 Tato prezentace se zaměřuje na popis, vizualizaci a iplmenetaci základních metod Numerické integrace.
 
+Prezentaci si můžete prohlédnout zde:
+https://ruttejan.github.io/NumIntegration/
+
