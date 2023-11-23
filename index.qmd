@@ -1,5 +1,5 @@
 ---
-title: "Numerická intergace"
+title: "Numerická integrace"
 author: "Jan Rutterle"
 bibliography: references.bib
 output-dir: docs
@@ -21,7 +21,7 @@ jupyter: julia-1.9
 
 ::: uvod
 -   Numerická integrace je technika aproximace určitého intergálu.
--   Pro numerickou integraci můžeme využít několika metod:
+-   Pro numerickou integraci můžeme využít několik metod:
 :::
 
 ::: columns
@@ -44,7 +44,7 @@ jupyter: julia-1.9
 :::
 
 ::: uvod
--   Numerické integrace užijeme v případech, kdy je integrand příliš složitý nebo nelze vypočítat
+-   Numerické integrace užijeme v případech, kdy je integrand příliš složitý nebo nelze jej vypočítat
 -   V této prezentaci se zaměříme na Newton-Cotesovy metody
 :::
 
@@ -63,12 +63,12 @@ jupyter: julia-1.9
 
 $$h = \frac{a - b}{n}$$
 
-$$x_0 = a; x_i = a + i \cdot h; x_n = b,\space\space kde \space\space i = 1\dots n-1$$
+$$x_0 = a; x_i = a + i \cdot h; x_n = b,\space\space \text{kde} \space\space i = 1\dots n-1$$
 
 $$\int_{a}^{b} f(x) \, dx \approx \sum_{i=1}^{n} f\left(\frac{x_{i-1} + x_i}{2}\right) h$$
 :::
 
-## Výpočet - obdélníkové metody
+## Výpočet - Obdélníková metoda
 
 ```{julia}
 #| echo: true
@@ -151,13 +151,13 @@ end
 
 $$h = \frac{a - b}{n}$$
 
-$$x_0 = a;\space x_i = a + i \cdot h;\space x_n = b,\space\space kde \space\space i = 1\dots n-1$$
+$$x_0 = a;\space x_i = a + i \cdot h;\space x_n = b,\space\space \text{kde} \space\space i = 1\dots n-1$$
 
 $$\int_{a}^{b} f(x) \, dx \approx \frac{h}{2} (x_0 + x_n + \sum_{i=1}^{n-1} 2f(x_i))$$
 
 :::
 
-## Výpočet - lichoběžníkové metody
+## Výpočet - Lichoběžníková metoda
 
 ```{julia}
 #| echo: true
@@ -235,18 +235,18 @@ end
 
 -   Opět rozdělíme interval na $n$ podintervalů ($n + 1$ bodů)
 -   Funkčními hodnotami krajních bodů a středu intrervalů proložíme paraboly
--   Aproximace integrálu se zjednodušší na výpočet intrgrálu z kvadratické funkce
+-   Aproximace integrálu se zjednodušší na výpočet integrálu z kvadratické funkce
 $$h = \frac{a - b}{n}$$
-$$x_0 = a;\space x_i = a + i \cdot h;\space x_n = b,\space\space kde \space\space i = 1\dots n-1$$
+$$x_0 = a;\space x_i = a + i \cdot h;\space x_n = b,\space\space \text{kde} \space\space i = 1\dots n-1$$
 $$\int_{x_i}^{x_{i+1}} f(x) \, dx \approx \int_{x_i}^{x_{i+1}} ax^2 + bx + c \, dx = \frac{h}{6}(f(x_i) + 4f(x_i + \frac{h}{2}) + f(x_{i+1})) $$
 
 -   Ze vzorečku je vidět, že krajní body mají váhu 1 a středové body mají váhu 4.
--   Jelikož všechny krajní body podintervalů (kromě krajních bodů původního intervalu) použijeme dvakrát, proto jim přiřadíme váhu 2 [pro více informací: @navara2023]
+-   Jelikož všechny krajní body podintervalů (kromě krajních bodů původního intervalu) použijeme dvakrát, přiřadíme jim váhu 2 [pro více informací: @navara2023]
 $$\int_{a}^{b} f(x) \, dx \approx \frac{h}{6}(x_0 + x_n + \sum_{i=1}^{n-1} 2f(x_i) + \sum_{i=0}^{n-1} 4f(x_i + \frac{h}{2}))$$ 
 
 :::
 
-## Výpočet - Simpsonovy metody
+## Výpočet - Simpsonova metody
 
 ```{julia}
 #| echo: true
@@ -350,7 +350,7 @@ end
 ## integrate()
 
 ::: txt2
--   Tato funkce iteruje, dokud rozdíl aktuální a předchozí aproximace není menší než nějaký zadaný threshold nebo dokud není dosažen maximální počet iterací.
+-   Tato funkce iteruje, dokud rozdíl aktuální a předchozí aproximace není menší než nějaký zadaný threshold, nebo dokud není dosažen maximální počet iterací.
 :::
 
 ```{julia}
@@ -391,7 +391,7 @@ end
 ## integrate_compare()
 
 ::: txt2
--   Tato funkce iteruje, dokud rozdíl aproximace a referenční aproximace z knihovny Quadgk není menší než nějaký zadaný threshold nebo dokud není dosažen maximální počet iterací.
+-   Tato funkce iteruje, dokud rozdíl aproximace a referenční aproximace z knihovny Quadgk není menší než nějaký zadaný threshold, nebo dokud není dosažen maximální počet iterací.
 :::
 
 ```{julia}
@@ -504,13 +504,13 @@ result, error = quadgk(f, a, b);
 result1, error1, n1 = integrate(Trapezoid(), f, a, b);
 result2, error2, n2 = integrate(Midpoint(), f, a, b);
 result3, error3, n3 = integrate(Simpson(), f, a, b);
-println("Reference: ", result, " horní odhad chyby: ", error)
+println("Reference: ", result, ", horní odhad chyby: ", error)
 println()
 println("Aproximace za použití funkce \"integrate()\":")
 println()
-println("Lichoběžníky: ", result1, " horní odhad chyby: ", error1, " n: ", n1)
-println("Obdélníky: ", result2, " horní odhad chyby: ", error2, " n: ", n2)
-println("Simpson: ", result3, " horní odhad chyby: ", error3, " n: ", n3)
+println("Lichoběžníky: ", result1, ", horní odhad chyby: ", error1, ", n: ", n1)
+println("Obdélníky: ", result2, ", horní odhad chyby: ", error2, ", n: ", n2)
+println("Simpson: ", result3, ", horní odhad chyby: ", error3, ", n: ", n3)
 
 result21, error21, n21 = integrate_compare(Trapezoid(), f, a, b);
 result22, error22, n22 = integrate_compare(Midpoint(), f, a, b);
@@ -519,15 +519,15 @@ result23, error23, n23 = integrate_compare(Simpson(), f, a, b);
 println()
 println("Aproximace za použití funkce \"integrate_compare()\":")
 println()
-println("Lichoběžníky: ", result21, " horní odhad chyby: ", error21, " n: ", n21)
-println("Obdélníky: ", result22, " horní odhad chyby: ", error22, " n: ", n22)
-println("Simpson: ", result23, " horní odhad chyby: ", error23, " n: ", n23)
+println("Lichoběžníky: ", result21, ", horní odhad chyby: ", error21, ", n: ", n21)
+println("Obdélníky: ", result22, ", horní odhad chyby: ", error22, ", n: ", n22)
+println("Simpson: ", result23, ", horní odhad chyby: ", error23, ", n: ", n23)
 ```
 
 ## Porovnání pokračování
 
 ::: txt2
-- Pro lepší zobrazení rozdílu metod použijeme pouze funkce **numerical_int()**
+- Pro lepší zobrazení rozdílu metod použijeme pouze funkci **numerical_int()**
 - Funkce: $f(x) = \sin^{100}(x)$; interval: $[a,b] = [0,2]$; $n = 5$
 :::
 
@@ -553,7 +553,7 @@ result, error = quadgk(f, a, b);
 result1 = numerical_int(Trapezoid(), f, a, b, n);
 result2 = numerical_int(Midpoint(), f, a, b, n);
 result3 = numerical_int(Simpson(), f, a, b, n);
-println("Reference: ", result, " horní odhad chyby: ", error)
+println("Reference: ", result, ", horní odhad chyby: ", error)
 println()
 println("Aproximace za použití funkce \"numerical_int()\":")
 println()
@@ -574,7 +574,4 @@ println("Simpson: ", result3)
 # Zdroje
 
 :::{#refs}
-<!-- -   Calculus Early Transcendentals: Integral & Multi-Variable Calculus for Social Sciences: 2.6 Numerical Integration [online]. [cit. 2023-11-19]. Dostupné z: <https://www.sfu.ca/math-coursenotes/Math%20158%20Course%20Notes/sec_Numerical_Integration.html>
-
--   NAVARA, Mirko. Numerické metody [online]. 2023, 31.10.2023, 60-64 [cit. 2023-11-19]. Dostupné z: <https://cmp.felk.cvut.cz/~navara/nm/NMall_print.pdf> -->
 :::
