@@ -46,7 +46,7 @@ function numerical_int(::Trapezoid,
     h = (b - a) / n
     x_values = collect((a+h):h:(b-h))
     integral = (f(a) + f(b))
-    for i = 1:length(x_values)-1
+    for i = 1:length(x_values)
         integral += 2 * f(x_values[i])
     end
     return (h / 2) * integral
